@@ -25,7 +25,7 @@ SECRET_KEY = "4a&sfy1g1$sb1k53sdu*lxj9ref(!5i@qf)q%by(kqnu#je&yt"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["192.168.1.101"]
 
 
 # Application definition
@@ -121,3 +121,4 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 ASGI_APPLICATION = "mysite.asgi.application"
+CHANNEL_LAYERS = {"default": {"BACKEND": "channels.layers.InMemoryChannelLayer"}}
