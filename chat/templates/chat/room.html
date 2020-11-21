@@ -3,72 +3,128 @@
 <html>
 
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <title>Chat Room</title>
 </head>
 
 <body>
-    <audio id="song" controls>
-        <source src="https://file-examples-com.github.io/uploads/2017/11/file_example_MP3_5MG.mp3" type="audio/mpeg">
-    </audio>
-    <textarea id="chat-log" cols="100" rows="20"></textarea><br>
-    <input id="chat-message-input" type="text" size="100"><br>
-    <input id="chat-message-submit" type="button" value="Send">
-    <!--<button onclick="playAudio">Play/Pause</button> -->
-    {{ room_name|json_script:"room-name" }}
-    <script>
-        const roomName = JSON.parse(document.getElementById('room-name').textContent);
 
-        const chatSocket = new WebSocket(
-            'ws://'
-            + window.location.host
-            + '/ws/chat/'
-            + roomName
-            + '/'
-        );
+<div id="player"></div>
+<div class="buttons">
+    <button class="button" id="play-button">PLAY</button>
+    <button class="button" id="pause-button">PAUSE</button>
+    <button class="button" id="stop-button">STOP</button>
+</div>
+Welcome to {{ room_name }}<br>
+
+<textarea id="chat-log" cols="100" rows="20"></textarea><br>
+<input id="chat-message-input" type="text" size="100"><br>
+<input id="chat-message-submit" type="button" value="Send">
+
+{{ room_name|json_script:"room-name" }}
+<script>
+    const roomName = JSON.parse(document.getElementById('room-name').textContent);
+
+    const chatSocket = new WebSocket(
+        'ws://'
+        + window.location.host
+        + '/ws/chat/'
+        + roomName
+        + '/'
+    );
+    let id = ''
+
+    chatSocket.onmessage = function (e) {
+        const data = JSON.parse(e.data);
+        document.querySelector('#chat-log').value += (data.message + '\n');
+        const control = data.message;
+        if (control.includes('play')) {
+
+            const res = control.split(' ');
+            let url = res[1]
+            const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+            const match = url.match(regExp);
+
+            id = match && match[7].length === 11 ? match[7] : false;
+
+            player.videoId = id
+            console.log(player)
+            player.loadVideoById(id)
+            player.pauseVideo()
+            setTimeout(function () {
+                player.playVideo();
+            }, 1000);
 
 
-        chatSocket.onmessage = function (e) {
-            const data = JSON.parse(e.data);
-            document.querySelector('#chat-log').value += (data.message + '\n');
-            control = data.message
-            console.log(control)
-            if (control == 'play') {
-                document.getElementById('song').play()
+        }
+        if (control === 'pause') {
+            player.pauseVideo()
+        }
+
+    };
+
+    chatSocket.onclose = function (e) {
+        console.error('Chat socket closed unexpectedly');
+    };
+
+    document.querySelector('#chat-message-input').focus();
+    document.querySelector('#chat-message-input').onkeyup = function (e) {
+        if (e.keyCode === 13) {
+            document.querySelector('#chat-message-submit').click();
+        }
+    };
+
+    document.querySelector('#chat-message-submit').onclick = function (e) {
+        const messageInputDom = document.querySelector('#chat-message-input');
+        const message = messageInputDom.value;
+        chatSocket.send(JSON.stringify({
+            'message': message
+        }));
+        messageInputDom.value = '';
+    };
+
+
+    var tag = document.createElement('script');
+
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    var player;
+
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+            height: '400',
+            width: '400',
+            videoId: null,
+            events: {
+                'onReady': onPlayerReady,
             }
-            if (control == 'pause') {
-                document.getElementById('song').pause()
-            }
+        });
+        console.log(player.videoId)
+    }
 
-        };
+    function onPlayerReady(event) {
+        var playButton = document.getElementById("play-button");
+        playButton.addEventListener("click", function () {
+            player.videoId = 'AGPpUTPzS6k'
+            {#player.loadVideoById(player.videoId)#}
+            player.playVideo();
+        });
 
-        chatSocket.onclose = function (e) {
-            console.error('Chat socket closed unexpectedly');
-        };
+        var pauseButton = document.getElementById("pause-button");
+        pauseButton.addEventListener("click", function () {
+            player.pauseVideo();
+        });
 
-        document.querySelector('#chat-message-input').focus();
-        document.querySelector('#chat-message-input').onkeyup = function (e) {
-            if (e.keyCode === 13) {  // enter, return
-                document.querySelector('#chat-message-submit').click();
-            }
-        };
+        var stopButton = document.getElementById("stop-button");
+        stopButton.addEventListener("click", function () {
+            player.stopVideo();
+        });
 
-        document.querySelector('#chat-message-submit').onclick = function (e) {
-            const messageInputDom = document.querySelector('#chat-message-input');
-            const message = messageInputDom.value;
-            chatSocket.send(JSON.stringify({
-                'message': message
-            }));
-            messageInputDom.value = '';
-        };
-        // function playAudio() {
-        //     var x = document.getElementById("song");
-        //     x.play();
-        //     chatSocket.send(JSON.stringify({
-        //         'control': 'play'
-        //     }))
-        // }
-    </script>
+    }
+
+
+</script>
 </body>
 
 </html>
