@@ -8,19 +8,21 @@
 </head>
 
 <body>
-    What chat room would you like to enter?<br>
-    <input id="room-name-input" type="text" size="100"><br>
+    Enter username and chatroom :<br>
+    <label for="user-name-input">Username: </label><input id="user-name-input" type="text" size="100"><br>
+    <label for="room-name-input">Room Name:</label><input id="room-name-input" type="text" size="100"><br>
     <input id="room-name-submit" type="button" value="Enter">
 
     <script>
-        document.querySelector('#room-name-input').focus();
+        document.querySelector('#user-name-input').focus();
         document.querySelector('#room-name-input').onkeyup = function (e) {
-            if (e.keyCode === 13) {  // enter, return
+            if (e.keyCode === 13) {
                 document.querySelector('#room-name-submit').click();
             }
         };
 
         document.querySelector('#room-name-submit').onclick = function (e) {
+            var userName = document.querySelector('#user-name-input').value;
             var roomName = document.querySelector('#room-name-input').value;
             window.location.pathname = '/chat/' + roomName + '/';
         };
