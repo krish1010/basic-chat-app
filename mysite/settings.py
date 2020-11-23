@@ -1,32 +1,46 @@
+import django
+import dotenv
+from pathlib import Path
 import os
 import random
 import string
 import django_heroku
 
-from pathlib import Path
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", __file__)
 
-BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.environ.get("SECRET_KEY", "".join(random.choice(string.printable) for _ in range(40)))
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+
+
+# class Dev(Configuration):
+#     DOTENV = os.path.join(BASE_DIR, '.env')
+
+#     SECRET_KEY = values.SecretValue()
+
+SECRET_KEY = os.environ.get("SECRET_KEY", "".join(
+    random.choice(string.printable) for _ in range(40)))
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
 
-INSTALLED_APPS = [
-    "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
-    "django.contrib.staticfiles",
-    "chat",
-    "channels",
-]
+INSTALLED_APPS = (
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'daphne',
+    'gunicorn',
+    'chat',
+    'channels',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+)
 
 MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -56,20 +70,14 @@ TEMPLATES = [
     },
 ]
 
-# WSGI_APPLICATION = "mysite.wsgi.application"
-
-# Database
-# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
+ASGI_APPLICATION = "mysite.asgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
-# Password validation
-# https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -86,8 +94,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internationalization
-# https://docs.djangoproject.com/en/3.1/topics/i18n/
 
 LANGUAGE_CODE = "en-us"
 
@@ -99,7 +105,9 @@ USE_L10N = True
 
 USE_TZ = True
 
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
 STATIC_URL = "/static/"
-ASGI_APPLICATION = "mysite.asgi.application"
-CHANNEL_LAYERS = {"default": {"BACKEND": "channels.layers.InMemoryChannelLayer"}}
+
+CHANNEL_LAYERS = {"default": {
+    "BACKEND": "channels.layers.InMemoryChannelLayer"}}
+# django.setup()
