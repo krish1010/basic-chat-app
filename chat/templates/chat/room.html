@@ -50,13 +50,18 @@ Welcome to {{ room_name }}<br>
             player.videoId = id
             console.log(player)
             player.loadVideoById(id)
-            player.pauseVideo()
-            setTimeout(function () {
-                player.playVideo();
-            }, 1000);
-
-
+            setTimeout(function(){player.pauseVideo()},2000)
+            player.seekTo(0)
+            // player.pauseVideo()
+            setTimeout(function(){
+                player.seekTo(0)
+                player.playVideo()
+            }
+                ,4000)
+            var date = new Date();
+            console.log(date)
         }
+
         if (control === 'pause') {
             player.pauseVideo()
         }
@@ -106,8 +111,6 @@ Welcome to {{ room_name }}<br>
     function onPlayerReady(event) {
         var playButton = document.getElementById("play-button");
         playButton.addEventListener("click", function () {
-            player.videoId = 'AGPpUTPzS6k'
-            {#player.loadVideoById(player.videoId)#}
             player.playVideo();
         });
 
