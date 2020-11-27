@@ -8,10 +8,20 @@
 </head>
 
 <body>
-    Enter username and chatroom :<br>
-    <label for="user-name-input">Username: </label><input id="user-name-input" type="text" size="100"><br>
-    <label for="room-name-input">Room Name:</label><input id="room-name-input" type="text" size="100"><br>
-    <input id="room-name-submit" type="button" value="Enter">
+    <div class="background-dark">
+    <h1>Let's Sync You Up!</h1>
+    <br>
+    <!-- <h1 class="dark" >dark</h1> -->
+    <h1 class="light">light</h1>
+    <button class="dark-button" onclick="theme_change"></button>
+    <img class="big-bassclef" src="https://i.imgur.com/Jk4zyPj.png" alt="I'm an image">
+    <img class="small-bassclef" src="https://i.imgur.com/9TJrTPS.png" alt="I'm an image">
+    <img class="big-trebclef" src="https://i.imgur.com/QoxEeTf.png" alt="I'm an image">
+    <img class="small-trebclef" src="https://i.imgur.com/1vlmwpL.png" alt="I'm an image">
+    <label class="user-name" for="user-name-input">Username</label><input class="user-input" id="user-name-input" type="text" size="100"><br>
+    <label class="room-name" for="room-name-input">Room Name</label><input class="room-input" id="room-name-input" type="text" size="100"><br>
+    <input class="go" id="room-name-submit" type="button" value="GO >">
+    </div>
 
     <script>
         document.querySelector('#user-name-input').focus();
@@ -26,7 +36,197 @@
             var roomName = document.querySelector('#room-name-input').value;
             window.location.pathname = '/chat/' + roomName + '/';
         };
+        function theme_change(){
+            
+        }
     </script>
 </body>
 
 </html>
+<style>
+
+
+.background-light{
+    position: absolute;
+    width: 1520px;
+    height: 1024px;
+    left: 0px;
+    top: 0px;
+    background: linear-gradient(180deg, rgba(255, 151, 54, 0.92) 0%, rgba(254, 210, 54, 0.9) 100%);
+}
+.background-dark{
+    position: absolute;
+    width: 1520px;
+    height: 1024px;
+    left: 0px;
+    top: 0px;
+    background: linear-gradient(180deg, rgba(52, 52, 52, 0.92) 0%, rgba(84, 84, 84, 0.9) 100%);
+}
+h1{
+    position: absolute;
+    width: 708px;
+    height: 88px;
+    left: 366px;
+    top: 20px;
+    font-family: 'Red Hat Display', sans-serif;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 80px;
+    line-height: 106px;
+    color:white;
+}
+.user-name{
+    position: absolute;
+    width: 255px;
+    height: 53px;
+    left: 592px;
+    top: 230px;
+    font-family: Red Hat Display;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 48px;
+    line-height: 64px;
+    color: #FFFFFF;
+}
+.room-name{
+    position: absolute;
+    width: 300px;
+    height: 54px;
+    left: 578px;
+    top: 446px;
+    font-family: Red Hat Display;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 48px;
+    line-height: 64px;
+    color: #FFFFFF;
+}
+.user-input{
+    position: absolute;
+    width: 452px;
+    height: 66px;
+    left: 494px;
+    top: 334px;
+    background: rgba(251, 246, 246, 0.79);
+    border-radius: 58px;
+}
+.room-input{
+    position: absolute;
+    width: 452px;
+    height: 66px;
+    left: 494px;
+    top: 531px;
+    background: rgba(251, 246, 246, 0.79);
+    border-radius: 58px;
+}
+.go-light{
+    position: absolute;
+    width: 176px;
+    height: 67px;
+    left: 632px;
+    top: 683px;
+    background: #FF9900;
+    border-radius: 17px;
+    position: absolute;
+    font-family: Red Hat Display;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 48px;
+    line-height: 64px;
+    color: #FFFFFF;
+}
+.go{
+    position: absolute;
+    width: 176px;
+    height: 67px;
+    left: 632px;
+    top: 683px;
+    background: #A3A19F;
+    border-radius: 17px;
+    position: absolute;
+    font-family: Red Hat Display;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 48px;
+    line-height: 64px;
+    color: #FFFFFF;
+}
+.big-trebclef{
+    position: absolute;
+    width: 76px;
+    height: 137px;
+    left: 253px;
+    top: 120px;
+    filter: drop-shadow(-5px 5px 4px rgba(0, 0, 0, 0.25));
+}
+.small-trebclef{
+    position: absolute;
+    width: 38px;
+    height: 68px;
+    left: 328px;
+    top: 200px;
+    filter: drop-shadow(-5px 5px 4px rgba(0, 0, 0, 0.25));
+}
+.big-bassclef{
+    position: absolute;
+    left: 72%;
+    right: 25%;
+    top: 120px;
+    bottom: 67.58%;
+    filter: drop-shadow(-5px 5px 4px rgba(0, 0, 0, 0.25));
+}
+.small-bassclef{
+    position: absolute;
+    left: 79.5%;
+    right: 22%;
+    top: 200px;
+    bottom: 55%;
+    filter: drop-shadow(-5px 5px 4px rgba(0, 0, 0, 0.25));
+}
+.dark-box{
+    position: absolute;
+    width: 199px;
+    height: 79px;
+    left: 1300px;
+    top: 384px;
+    background: #C4C4C4;
+    border-radius: 23px;
+}
+.dark-button{
+    position: absolute;
+    width: 58px;
+    height: 58px;
+    left: 1282px;
+    top: 394px;
+    background: linear-gradient(180deg, rgba(255, 151, 54, 0.92) 0%, rgba(254, 210, 54, 0.9) 100%);
+    border-radius: 2em;
+}
+.light{
+    position: absolute;
+    width: 74px;
+    height: 23px;
+    left: 1349px;
+    top: 390px;
+    font-family: Red Hat Display;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 30px;
+    line-height: 100.3%;
+    text-align: center;
+    color:white;
+}
+.dark{
+    position: absolute;
+    width: 74px;
+    height: 23px;
+    left: 1349px;
+    top: 390px;
+    font-family: Red Hat Display;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 30px;
+    line-height: 100.3%;
+    text-align: center;
+    background: #C4C4C4;
+}
+</style>
