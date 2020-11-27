@@ -4,12 +4,13 @@
 
 <head>
     <meta charset="utf-8"/>
-    <title>Chat Room</title>
+    <title>Chat Room: {{ room_name }}</title>
 </head>
 
 <body>
-
-<div id="player"></div>
+<div class="play">
+    <div id="player"></div>
+</div>
 <div class="buttons">
     <button class="button" id="play-button">PLAY</button>
     <button class="button" id="pause-button">PAUSE</button>
@@ -22,6 +23,7 @@ Welcome to {{ room_name }}<br>
 <input id="chat-message-submit" type="button" value="Send">
 
 {{ room_name|json_script:"room-name" }}
+
 <script>
     const roomName = JSON.parse(document.getElementById('room-name').textContent);
 
@@ -98,8 +100,8 @@ Welcome to {{ room_name }}<br>
 
     function onYouTubeIframeAPIReady() {
         player = new YT.Player('player', {
-            height: '400',
-            width: '400',
+            height: '367',
+            width: '720',
             videoId: null,
             events: {
                 'onReady': onPlayerReady,
@@ -131,3 +133,14 @@ Welcome to {{ room_name }}<br>
 </body>
 
 </html>
+<style>
+    .play{
+        width: auto;
+        background-color: burlywood;
+    }
+    .button{
+        width: 25px;
+        background-color: aqua;
+        
+    }
+</style>
