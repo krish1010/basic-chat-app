@@ -1,10 +1,10 @@
 import django
-import dotenv
+# import dotenv
 from pathlib import Path
 import os
 import random
 import string
-import django_heroku
+# import django_heroku
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", __file__)
 
